@@ -787,15 +787,17 @@
             <timezone>8</timezone>
         </developer>
     </developers>
-    
+
     <distributionManagement>
         <snapshotRepository>
-            <id>sonatype-nexus-snapshots</id>
-            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+            <id>nexus-releases</id>
+            <name>Nexus-snapshots</name>
+            <url>http://192.168.0.4:8081/nexus/content/repositories/snapshots/</url>
         </snapshotRepository>
         <repository>
-            <id>sonatype-nexus-releases</id>
-            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+            <id>nexus-releases</id>
+            <name>Nexus-releases</name>
+            <url>http://192.168.0.4:8081/nexus/content/repositories/releases/</url>
         </repository>
     </distributionManagement>
 </project>
