@@ -273,7 +273,27 @@ public abstract class AbstractShardingPreparedStatementAdapter extends AbstractU
     
     @SneakyThrows
     private void setParameter(final Class[] argumentTypes, final Object... arguments) {
-        setParameterMethodInvocations.add(new SetParameterMethodInvocation(PreparedStatement.class.getMethod("setObject", argumentTypes), arguments, arguments[1]));
+        // FIXME TEMP FIX LONGVARCHAR BUG
+//        setParameterMethodInvocations.add(new SetParameterMethodInvocation(PreparedStatement.class.getMethod("setObject", argumentTypes), arguments, arguments[1]));
+
+        boolean findStringReader = false;
+        if (arguments != null && arguments.length >= 2 && arguments[1] instanceof Reader) {
+            findStringReader = true;
+        }
+        if (findStringReader) {
+            Class[] tmpArgumentTypes = new Class[argumentTypes.length];
+            for (int i = 0; i < argumentTypes.length; i++) {
+                if (i == 1) {
+                    tmpArgumentTypes[i] = Reader.class;
+                } else {
+                    tmpArgumentTypes[i] = argumentTypes[i];
+                }
+            }
+            setParameterMethodInvocations.add(new SetParameterMethodInvocation(PreparedStatement.class.getMethod("setCharacterStream", tmpArgumentTypes), arguments, arguments[1]));
+        } else {
+            setParameterMethodInvocations.add(new SetParameterMethodInvocation(PreparedStatement.class.getMethod("setObject", argumentTypes), arguments, arguments[1]));
+        }
+
     }
     
     @Override
