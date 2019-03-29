@@ -40,7 +40,6 @@ import io.shardingsphere.shardingjdbc.jdbc.core.connection.ShardingConnection;
 import io.shardingsphere.shardingjdbc.jdbc.core.resultset.GeneratedKeysResultSet;
 import io.shardingsphere.shardingjdbc.jdbc.core.resultset.ShardingResultSet;
 import lombok.Getter;
-import lombok.extern.slf4j.Slf4j;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -60,7 +59,6 @@ import java.util.List;
  * @author maxiaoguang
  * @author panjuan
  */
-@Slf4j
 public final class ShardingPreparedStatement extends AbstractShardingPreparedStatementAdapter {
 
     @Getter
