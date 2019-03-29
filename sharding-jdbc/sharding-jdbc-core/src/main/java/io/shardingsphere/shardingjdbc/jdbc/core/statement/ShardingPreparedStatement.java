@@ -126,11 +126,10 @@ public final class ShardingPreparedStatement extends AbstractShardingPreparedSta
             sqlRoute();
             initPreparedStatementExecutor();
             return preparedStatementExecutor.executeUpdate();
-        } catch (Exception e) {
-            log.warn("执行SQL出错:{}", stacktrace(e));
-            throw e;
         } finally {
-            refreshTableMetaData(connection.getShardingContext(), routeResult.getSqlStatement());
+            if (null != routeResult) {
+                refreshTableMetaData(connection.getShardingContext(), routeResult.getSqlStatement());
+            }
             clearBatch();
         }
     }
@@ -143,7 +142,9 @@ public final class ShardingPreparedStatement extends AbstractShardingPreparedSta
             initPreparedStatementExecutor();
             return preparedStatementExecutor.execute();
         } finally {
-            refreshTableMetaData(connection.getShardingContext(), routeResult.getSqlStatement());
+            if (null != routeResult) {
+                refreshTableMetaData(connection.getShardingContext(), routeResult.getSqlStatement());
+            }
             clearBatch();
         }
     }
